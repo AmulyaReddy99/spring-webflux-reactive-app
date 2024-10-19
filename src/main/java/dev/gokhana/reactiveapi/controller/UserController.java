@@ -49,8 +49,10 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<User> createUser(@RequestBody Mono<User> userMono) {
-        return userMono.flatMap(userService::saveUser);
+    public Mono<ResponseEntity<Mono<String>>> createUser(@RequestBody(required = false) Mono<User> userMono, @RequestParam int id) {
+        return userMono.flatMap(user -> user != null ? Mono.just(ResponseEntity.ok(userService.saveUser(user))) : Mono.empty())
+                .switchIfEmpty(Mono.just(ResponseEntity.ok(userService.noop(id)))
+                .doOnError((e) -> Mono.just(ResponseEntity.internalServerError().body(Mono.just("Failed to save user")))));
     }
 
     @PutMapping("/{id}")

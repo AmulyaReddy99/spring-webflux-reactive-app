@@ -6,6 +6,7 @@ import dev.gokhana.reactiveapi.model.Address;
 import dev.gokhana.reactiveapi.model.User;
 import dev.gokhana.reactiveapi.repository.AddressRepository;
 import dev.gokhana.reactiveapi.repository.UserRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -44,9 +45,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Mono<User> saveUser(User userDTO) {
-        if (userDTO.getAddress() == null) return userRepository.save(userDTO);
-        return saveUserWithAddress(userDTO);
+    public Mono<String> saveUser(User userDTO) {
+//        if (userDTO.getAddress() == null) return userRepository.save(userDTO);
+        //return saveUserWithAddress(userDTO);
+        //throw new RuntimeException();
+        return Mono.just("In save user");
+    }
+
+    @Override
+    public Mono<String> noop(int id) {
+//        if (userDTO.getAddress() == null) return userRepository.save(userDTO);
+        return Mono.just("In noop");
     }
 
     public Mono<User> saveUserWithAddress(User user) {

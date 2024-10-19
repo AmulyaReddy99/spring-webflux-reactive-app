@@ -20,6 +20,12 @@ dependencies {
     testImplementation 'io.projectreactor:reactor-test'
 }
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'dev.gokhana.reactiveapi.ReactiveRestApiDemoApplication'
+    }
+}
+
 test {
     useJUnitPlatform()
 }

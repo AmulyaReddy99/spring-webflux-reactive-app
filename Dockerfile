@@ -1,15 +1,4 @@
-version: '3'
-
-services:
-
-  database:
-    image: 'postgres:latest'
-
-    ports:
-      - 5432:5432
-    environment:
-      POSTGRES_USER: postgres # The PostgreSQL user (useful to connect to the database)
-      POSTGRES_PASSWORD: postgres # The PostgreSQL password (useful to connect to the database)
-      POSTGRES_DB: mydatabase
-    volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+FROM openjdk:17-jdk-slim
+COPY build/libs/spring-webflux-reactive-rest-api-demo-0.0.1-SNAPSHOT.jar app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
+EXPOSE 8099
